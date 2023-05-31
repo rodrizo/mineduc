@@ -24,7 +24,7 @@ BEGIN
 		SELECT p.PersonaId [Id], p.Nombre, p.Dpi, c.Nombre [Comite]
 		FROM Persona p WITH(NOLOCK)  
 		INNER JOIN Comite c WITH(NOLOCK) ON c.ComiteId = p.ComiteId
-		WHERE c.ComiteId = @idComite
+		WHERE c.ComiteId = ISNULL(@idComite, p.ComiteId)
 	END
 	
 	IF (@action = 'U') --Update

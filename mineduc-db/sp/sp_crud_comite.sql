@@ -4,6 +4,7 @@ GO
 Creador: Rodney Rizo
 Funcionalidad: SP para realizar CRUD de comités
 */
+
 CREATE PROCEDURE sp_crud_comite
    @action VARCHAR(3) = NULL,
    @idComite INT = NULL,
@@ -24,7 +25,7 @@ BEGIN
 		SELECT c.ComiteId [Id], c.Nombre, c.Fondo, e.Nombre [Escuela]
 		FROM Comite c WITH(NOLOCK)  
 		INNER JOIN Escuela e WITH(NOLOCK) ON e.EscuelaId = c.EscuelaId
-		WHERE e.EscuelaId = @idEscuela
+		WHERE e.EscuelaId = ISNULL(@idEscuela, e.EscuelaId)
 	END
 	
 	IF (@action = 'U') --Update
