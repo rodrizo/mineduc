@@ -13,6 +13,8 @@ CREATE TABLE Escuela(
 CREATE TABLE Factura(
 	FacturaId INT IDENTITY PRIMARY KEY,
 	Nombre VARCHAR(250),
+	Imagen IMAGE,
+	GastoId INT FOREIGN KEY REFERENCES Gasto(GastoId),
 	CreateDate DATETIME
 );
 
@@ -56,6 +58,5 @@ CREATE TABLE Gasto(
 	Descripcion VARCHAR(250),
 	Monto DECIMAL(10, 2),
 	LastModifiedDate DATETIME,
-	FacturaId INT FOREIGN KEY REFERENCES Factura(FacturaId),
 	ActividadId INT FOREIGN KEY REFERENCES Actividad(ActividadId)
 );

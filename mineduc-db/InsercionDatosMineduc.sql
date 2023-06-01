@@ -7,11 +7,17 @@ INSERT INTO Escuela (nombre) VALUES ('HIGA');
 INSERT INTO Escuela (nombre) VALUES ('Albert Einstein');
 INSERT INTO Escuela (nombre) VALUES ('IGER');
 
-INSERT INTO Factura (nombre) VALUES ('Comida');
-INSERT INTO Factura (nombre) VALUES ('Transporte');
-INSERT INTO Factura (nombre) VALUES ('Utiles escolares');
-INSERT INTO Factura (nombre) VALUES ('Materiales de construccion');
-INSERT INTO Factura (nombre) VALUES ('Refrigerio');
+INSERT INTO Gasto VALUES ('Gasto de material escolar', 500.00, GETDATE(), 1);
+INSERT INTO Gasto VALUES ('Gasto de transporte', 250.00, GETDATE(),2);
+INSERT INTO Gasto VALUES ('Gasto de alimentos', 800.00, GETDATE(),3);
+INSERT INTO Gasto VALUES ('material didáctico', 350.00, GETDATE(),4);
+INSERT INTO Gasto VALUES ('Gasto de decoración', 150.00, GETDATE(),5);
+
+INSERT INTO Factura VALUES ('Comida', 1, GETDATE());
+INSERT INTO Factura VALUES ('Transporte', 2, GETDATE());
+INSERT INTO Factura VALUES ('Utiles escolares', 3, GETDATE());
+INSERT INTO Factura VALUES ('Materiales de construccion', 4, GETDATE());
+INSERT INTO Factura VALUES ('Refrigerio', 5, GETDATE());
 
 INSERT INTO TipoActividad(descripcion) VALUES ('Organizacion de Eventos');
 INSERT INTO TipoActividad(descripcion) VALUES ('Apoyo en Aula');
@@ -38,9 +44,4 @@ INSERT INTO Actividad VALUES ('Viaje', '2023-07-05', 500.00, 'Compra Boletos', '
 INSERT INTO Actividad VALUES ('Almuerzo', '2023-08-02', 1500.00, 'Compra Alimentos', 'Ninguna', 1, 2);
 INSERT INTO Actividad VALUES ('Pintar Aula', '2023-09-05', 800.00, 'Compra Pintura', 'Ninguna', 3, 5);
 
-INSERT INTO Gasto VALUES ('Gasto de material escolar', 500.00, 1, 1);
-INSERT INTO Gasto VALUES ('Gasto de transporte', 250.00, 2, 2);
-INSERT INTO Gasto VALUES ('Gasto de alimentos', 800.00, 3, 3);
-INSERT INTO Gasto VALUES ('material didáctico', 350.00, 4, 4);
-INSERT INTO Gasto VALUES ('Gasto de decoración', 150.00, 5, 5);
 
