@@ -50,8 +50,8 @@ BEGIN
 	BEGIN
 		--Insertando data en bitácora
 		DECLARE @actionName VARCHAR(25);
-		SELECT @actionName = CASE WHEN @action = 'C' THEN 'Create' WHEN @action = 'R' THEN 'Read' WHEN @action = 'U' THEN 'Update' WHEN @action = 'D' THEN 'Delete' ELSE NULL END
+		SELECT @actionName = CASE WHEN @action = 'C' THEN 'Create' WHEN @action = 'U' THEN 'Update' WHEN @action = 'D' THEN 'Delete' ELSE NULL END
 
-		INSERT INTO Bitacora VALUES(@actionName, 'sp_crud_factura', CONCAT(@action,',',@idFactura,',',@nombre,',',ISNULL(SUBSTRING(@imagen,1,10), NULL),',',@idGasto), 1000, GETDATE())
+		INSERT INTO Bitacora VALUES(@actionName, 'sp_crud_factura', CONCAT(ISNULL(@action, 'NULL'),',',ISNULL(@idFactura, 0),',',ISNULL(@nombre, 'NULL'),',',ISNULL(SUBSTRING(@imagen,1,10), NULL),',',ISNULL(@idGasto, 0)), 1000, GETDATE())
 	END
 END

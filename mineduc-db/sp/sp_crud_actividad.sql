@@ -10,7 +10,7 @@ ALTER PROCEDURE sp_crud_actividad
    @idActividad INT = NULL,
    @nombre VARCHAR(50) = NULL,
    @fecha DATETIME = NULL,
-   @estimado DECIMAL(12,8)= NULL,
+   @estimado DECIMAL(12,8) = NULL,
    @detalle VARCHAR(MAX) = NULL,
    @observaciones VARCHAR(MAX) = NULL,
    @idTipoActividad INT = NULL,
@@ -26,9 +26,10 @@ BEGIN
 	
 	IF (@action = 'R') --Read
 	BEGIN
-		SELECT a.ActividadId [Id], a.Nombre, a.Fecha, a.Estimado, a.DetalleActividades [Detalle], a.Observaciones, ta.Descripcion [Actividad], c.Nombre [Comite]
+		SELECT a.ActividadId [Id], a.Nombre, a.Fecha, a.Estimado, a.DetalleActividades [Detalle], a.Observaciones, ta.Descripcion [Actividad], c.Nombre [Comite], e.Nombre [Escuela]
 		FROM Actividad a WITH(NOLOCK)  
 		INNER JOIN Comite c WITH(NOLOCK) ON c.ComiteId = a.ComiteId
+		INNER JOIN Escuela e WITH(NOLOCK) ON e.EscuelaId = c.EscuelaId
 		INNER JOIN TipoActividad ta WITH(NOLOCK) ON ta.TipoActividadId = a.TipoActividadId
 		WHERE c.ComiteId = ISNULL(@idComite, c.ComiteId)
 	END
@@ -45,9 +46,14 @@ BEGIN
 		DELETE Actividad WHERE ActividadId = @idActividad
 	END
 
-	--Insertando data en bitácora
-	DECLARE @actionName VARCHAR(25);
-	SELECT @actionName = CASE WHEN @action = 'C' THEN 'Create' WHEN @action = 'R' THEN 'Read' WHEN @action = 'U' THEN 'Update' WHEN @action = 'D' THEN 'Delete' ELSE NULL END
+	
+	IF(@action <> 'R')
+	BEGIN
 
-	INSERT INTO Bitacora VALUES(@actionName, 'sp_crud_factura', CONCAT(@action,',',@idActividad,',',@nombre,',',@fecha,',',@estimado,',',@detalle,',',@observaciones,',',@idTipoActividad,',',@idComite), 1000, GETDATE())
+		--Insertando data en bitácora
+		DECLARE @actionName VARCHAR(25);
+		SELECT @actionName = CASE WHEN @action = 'C' THEN 'Create' WHEN @action = 'U' THEN 'Update' WHEN @action = 'D' THEN 'Delete' ELSE NULL END
+
+		INSERT INTO Bitacora VALUES(@actionName, 'sp_crud_actividad', CONCAT(ISNULL(@action, 'NULL'),',',ISNULL(@idActividad, 0),',',ISNULL(@nombre, 'NULL'),',',ISNULL(@fecha, 'NULL'),',',ISNULL(@estimado, 0.0),',',ISNULL(@detalle, 'NULL'),',',ISNULL(@observaciones, 'NULL'),',',ISNULL(@idTipoActividad, 0),',',ISNULL(@idComite, 0)), 1000, GETDATE())
+	END
 END

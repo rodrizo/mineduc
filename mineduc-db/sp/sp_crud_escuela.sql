@@ -35,9 +35,13 @@ BEGIN
 		DELETE Escuela where EscuelaId = @idEscuela
 	END
 	
-	--Insertando data en bitácora
-	DECLARE @actionName VARCHAR(25);
-	SELECT @actionName = CASE WHEN @action = 'C' THEN 'Create' WHEN @action = 'R' THEN 'Read' WHEN @action = 'U' THEN 'Update' WHEN @action = 'D' THEN 'Delete' ELSE NULL END
+	
+	IF(@action <> 'R')
+	BEGIN
+		--Insertando data en bitácora
+		DECLARE @actionName VARCHAR(25);
+		SELECT @actionName = CASE WHEN @action = 'C' THEN 'Create' WHEN @action = 'U' THEN 'Update' WHEN @action = 'D' THEN 'Delete' ELSE NULL END
 
-	INSERT INTO Bitacora VALUES(@actionName, 'sp_crud_factura', CONCAT(@action,',',@idEscuela,',',@nombre), 1000, GETDATE())
+		INSERT INTO Bitacora VALUES(@actionName, 'sp_crud_escuela', CONCAT(ISNULL(@action, 'NULL'),',',ISNULL(@idEscuela, 0),',',ISNULL(@nombre, 'NULL')), 1000, GETDATE())
+	END
 END

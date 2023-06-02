@@ -40,9 +40,13 @@ BEGIN
 		DELETE Comite where ComiteId = @idComite
 	END
 
-	--Insertando data en bitácora
-	DECLARE @actionName VARCHAR(25);
-	SELECT @actionName = CASE WHEN @action = 'C' THEN 'Create' WHEN @action = 'R' THEN 'Read' WHEN @action = 'U' THEN 'Update' WHEN @action = 'D' THEN 'Delete' ELSE NULL END
+	
+	IF(@action <> 'R')
+	BEGIN
+		--Insertando data en bitácora
+		DECLARE @actionName VARCHAR(25);
+		SELECT @actionName = CASE WHEN @action = 'C' THEN 'Create' WHEN @action = 'U' THEN 'Update' WHEN @action = 'D' THEN 'Delete' ELSE NULL END
 
-	INSERT INTO Bitacora VALUES(@actionName, 'sp_crud_factura', CONCAT(@action,',',@idComite,',',@nombre,',',@fondo,',',@idEscuela), 1000, GETDATE())
+		INSERT INTO Bitacora VALUES(@actionName, 'sp_crud_comite', CONCAT(ISNULL(@action, 'NULL'),',',ISNULL(@idComite, 0),',',ISNULL(@nombre, 'NULL'),',',ISNULL(@fondo, 0.0),',',ISNULL(@idEscuela, 0)), 1000, GETDATE())
+	END
 END

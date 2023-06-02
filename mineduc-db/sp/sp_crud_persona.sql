@@ -45,6 +45,6 @@ BEGIN
 		DECLARE @actionName VARCHAR(25);
 		SELECT @actionName = CASE WHEN @action = 'C' THEN 'Create' WHEN @action = 'U' THEN 'Update' WHEN @action = 'D' THEN 'Delete' ELSE NULL END
 
-		INSERT INTO Bitacora VALUES(@actionName, 'sp_crud_factura', CONCAT(@action,',',ISNULL(@idPersona, 'NULL'),',',ISNULL(@nombre, 'NULL'),',',ISNULL(@dpi, 'NULL'),',',ISNULL(@idComite, 'NULL')), 1000, GETDATE())
+		INSERT INTO Bitacora VALUES(@actionName, 'sp_crud_persona', CONCAT(@action,',',ISNULL(@idPersona, 0),',',ISNULL(@nombre, 'NULL'),',',ISNULL(@dpi, 'NULL'),',',ISNULL(@idComite, 0)), 1000, GETDATE())
 	END
 END
