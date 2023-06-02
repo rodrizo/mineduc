@@ -44,4 +44,10 @@ BEGIN
 	BEGIN
 		DELETE Actividad WHERE ActividadId = @idActividad
 	END
+
+	--Insertando data en bitácora
+	DECLARE @actionName VARCHAR(25);
+	SELECT @actionName = CASE WHEN @action = 'C' THEN 'Create' WHEN @action = 'R' THEN 'Read' WHEN @action = 'U' THEN 'Update' WHEN @action = 'D' THEN 'Delete' ELSE NULL END
+
+	INSERT INTO Bitacora VALUES(@actionName, 'sp_crud_factura', CONCAT(@action,',',@idActividad,',',@nombre,',',@fecha,',',@estimado,',',@detalle,',',@observaciones,',',@idTipoActividad,',',@idComite), 1000, GETDATE())
 END

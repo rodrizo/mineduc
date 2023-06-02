@@ -25,6 +25,16 @@ CREATE TABLE TipoActividad(
 );
 
 
+CREATE TABLE Bitacora(
+	BitacoraId INT IDENTITY PRIMARY KEY,
+	Action VARCHAR(250),
+	SpName VARCHAR(250),
+	Parameters VARCHAR(MAX),
+	UserId BIGINT,
+	CreateDate DATETIME
+);
+
+
 --Tables with FK
 CREATE TABLE Persona(
 	PersonaId INT IDENTITY PRIMARY KEY,
