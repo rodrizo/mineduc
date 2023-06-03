@@ -8,7 +8,7 @@ Funcionalidad: SP para realizar operaciones de actividades
 ALTER PROCEDURE sp_crud_actividad
    @action VARCHAR(3) = NULL,
    @idActividad INT = NULL,
-   @nombre VARCHAR(50) = NULL,
+   @nombre VARCHAR(250) = NULL,
    @fecha DATETIME = NULL,
    @estimado DECIMAL(12,8) = NULL,
    @detalle VARCHAR(MAX) = NULL,
@@ -54,6 +54,6 @@ BEGIN
 		DECLARE @actionName VARCHAR(25);
 		SELECT @actionName = CASE WHEN @action = 'C' THEN 'Create' WHEN @action = 'U' THEN 'Update' WHEN @action = 'D' THEN 'Delete' ELSE NULL END
 
-		INSERT INTO Bitacora VALUES(@actionName, 'sp_crud_actividad', CONCAT(ISNULL(@action, 'NULL'),',',ISNULL(@idActividad, 0),',',ISNULL(@nombre, 'NULL'),',',ISNULL(@fecha, 'NULL'),',',ISNULL(@estimado, 0.0),',',ISNULL(@detalle, 'NULL'),',',ISNULL(@observaciones, 'NULL'),',',ISNULL(@idTipoActividad, 0),',',ISNULL(@idComite, 0)), 1000, GETDATE())
+		INSERT INTO Bitacora VALUES(@actionName, 'sp_crud_actividad', CONCAT(ISNULL(@action, 'NULL'),',',ISNULL(@idActividad, 0),',',ISNULL(@nombre, 'NULL'),',',ISNULL(@fecha, NULL),',',ISNULL(@estimado, 0.0),',',ISNULL(@detalle, 'NULL'),',',ISNULL(@observaciones, 'NULL'),',',ISNULL(@idTipoActividad, 0),',',ISNULL(@idComite, 0)), 1000, GETDATE())
 	END
 END

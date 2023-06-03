@@ -40,6 +40,17 @@ BEGIN
 		DELETE Comite where ComiteId = @idComite
 	END
 
+
+	IF (@action = 'M') --Resultados obtenidos de mejoramiento de escuela
+	BEGIN
+		SELECT c.Nombre [Comite], a.Nombre [Actividad], a.DetalleActividades [Detalle], a.Observaciones, a.Estimado, ta.Descripcion [Tipo de actividad]
+		FROM Comite c WITH(NOLOCK)
+		INNER JOIN Actividad a WITH(NOLOCK) ON a.ComiteId = c.ComiteId
+		INNER JOIN TipoActividad ta WITH(NOLOCK) ON ta.TipoActividadId = a.TipoActividadId
+		WHERE c.ComiteId = ISNULL(@idComite, c.ComiteId)
+		AND ta.TipoActividadId = 3 --Mejoramiento
+	END
+
 	
 	IF(@action <> 'R')
 	BEGIN

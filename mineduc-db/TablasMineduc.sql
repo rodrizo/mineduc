@@ -52,7 +52,7 @@ CREATE TABLE Comite(
 
 CREATE TABLE Actividad(
 	ActividadId INT IDENTITY PRIMARY KEY,
-	Nombre VARCHAR(25),
+	Nombre VARCHAR(250),
 	Fecha DATETIME,
 	Estimado DECIMAL(10, 2),
 	DetalleActividades VARCHAR(250),
